@@ -7,9 +7,10 @@ export const loginUser = async (req, res, next) => {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
     const isPasswordCorrect = await bcrypt.compare(
-      user?.password || "",
-      password
+      password,
+      user?.password || ""
     );
+    // console.log(user, isPasswordCorrect);
     if (!user || !isPasswordCorrect) {
       return res.status(400).json({ error: "Invalid username or password" });
     }
@@ -26,9 +27,18 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-export const logoutUser = (req, res, next) => {
-  res.send("logout route");
+export const logoutUser = async (req, res, next) => {
+  try {
+    res.cookie("jwt", "", {
+      maxAge: 0,
+    });
+    res.status(200).json({ message: "Successfully logged out" });
+  } catch (error) {
+    console.log("Error in logout controlller", error.message);
+    res.status(500).json({ error: " Internal Server Error" });
+  }
 };
+
 export const signupUser = async (req, res, next) => {
   try {
     const { fullName, username, password, confirmPassword, gender } = req.body;

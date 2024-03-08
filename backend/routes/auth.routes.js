@@ -7,6 +7,6 @@ import {
 } from "../controllers/auth.controller.js"; // Corrected import path
 
 router.post("/login", loginUser);
-router.get("/logout", logoutUser);
+router.post("/logout", logoutUser);
 router.post("/signup", signupUser); // Use POST for signup
 export default router;
