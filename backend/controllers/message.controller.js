@@ -46,7 +46,7 @@ export const getMessage = async (req, res) => {
     }).populate("messages"); // Not a error but the message object itself
 
     if (!conversation) {
-      return res.status(200).json({ error: "Conversation not started ye" });
+      return res.status(200).json({ error: "Conversation not started yet" });
     }
     const messages = conversation.messages;
 
