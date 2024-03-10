@@ -1,4 +1,4 @@
-// import { useSocketContext } from "../../context/SocketContext";
+import { useSocketContext } from "../../context/SocketContext";
 import { useConversation } from "../../context/ConversationContext";
 
 const Conversation = ({ conversation, lastIdx, emoji }) => {
@@ -10,9 +10,8 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
   } = useConversation();
 
   const isSelected = selectedConversation?._id === conversation._id;
-  // console.log(conversation._id, selectedConversation, isSelected);
-  // const { onlineUsers } = useSocketContext();
-  const isOnline = true;
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers.includes(conversation._id);
 
   return (
     <>
