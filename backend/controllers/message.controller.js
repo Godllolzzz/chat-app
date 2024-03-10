@@ -28,6 +28,7 @@ export const sendMessage = async (req, res) => {
     }
     // This will run in parallel
     await Promise.all([newMessage.save(), conversation.save()]);
+    console.log(newMessage);
     res.status(200).json(newMessage);
   } catch (error) {
     console.log("Error in sendMessage controller", error.message);
@@ -43,7 +44,7 @@ export const getMessage = async (req, res) => {
     let conversation = await Conversation.findOne({
       participants: { $all: [senderId, userToChatId] },
     }).populate("messages"); // Not a error but the message object itself
-    
+
     if (!conversation) {
       return res.status(200).json({ error: "Conversation not started ye" });
     }
